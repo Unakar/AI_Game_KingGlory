@@ -1,0 +1,301 @@
+syntax = "proto2"; //用于proto3.x编译时兼容proto2.x
+package sgame_state;
+
+enum ActorType
+{
+	ACTOR_HERO = 0;            // 英雄
+	ACTOR_MONSTER = 1;         // 怪物
+	ACTOR_ORGAN = 2;           // 机关
+	ACTOR_EYE = 3;             // 眼
+	ACTOR_CALL = 4;            // 召唤物
+	ACTOR_BULLET = 5;          // 子弹
+	ACTOR_BLOCK = 6;           // 阻挡物
+	ACTOR_INTERACTITEM = 7;    // 交互物品
+	ACTOR_SHENFU = 8;          // 神符
+	ACTOR_VEHICLE = 9;         // 载具
+	ACTOR_ALL = 10;
+	ACTOR_INVALID = 11;
+}
+
+enum ActorSubType		//此定义与gamecore的相关类型需作转换，按需添加，数值定义规则：10 * 所属主类型 + 子类型序号
+{
+	ACTOR_SUB_NONE = 0;
+	ACTOR_SUB_SOLDIER = 11;			//兵线士兵
+	ACTOR_SUB_BAOJUN = 12;			//暴君
+	ACTOR_SUB_BARON = 13;			//主宰
+	ACTOR_SUB_BLUEBA = 14;			//蓝爸爸
+	ACTOR_SUB_REDBA = 15;			//红爸爸
+	ACTOR_SUB_BIGDRAGON = 16;		//大龙
+	ACTOR_SUB_DARK_BIGDRAGON = 17;	//黑暗大龙
+	ACTOR_SUB_TOWER = 21;			//普通炮塔
+	ACTOR_SUB_TOWER_HIGH = 22;		//高地塔
+	ACTOR_SUB_TOWER_SPRING = 23;	//泉水塔
+	ACTOR_SUB_CRYSTAL = 24;			//基地水晶
+}
+
+enum PLAYERCAMP
+{
+	PLAYERCAMP_MID = 0;	// 裁判位
+	PLAYERCAMP_1 = 1;	// 阵营1
+	PLAYERCAMP_2 = 2;	// 阵营2
+}
+
+enum ObjBehaviMode
+{
+	State_Idle = 0;	// 待机状态
+	State_Dead = 1;	// 死亡状态
+	Direction_Move = 2;	// 普通方向移动
+	Destination_Move = 3;	// 普通终点移动
+	Normal_Attack = 4;	// 按下普通攻击键的模式
+	Attack_Move = 5;	// A方式移动
+	Attack_Path = 6;	// 沿路径攻击
+	Attack_Lock = 7;	// 锁定目标攻击
+	UseSkill_0 = 8;	// 使用技能0（普通攻击）
+	UseSkill_1 = 9;	// 使用技能1
+	UseSkill_2 = 10;	// 使用技能2
+	UseSkill_3 = 11;	// 使用技能3
+	UseSkill_EX3 = 12;	// 使用技能EX3 4技能的第3技能
+	UseSkill_4 = 13;	// 使用技能4
+	UseSkill_5 = 14;	// 使用技能5
+	UseSkill_6 = 15;	// 使用技能6
+	UseSkill_7 = 16;	// 使用技能7（装饰栏技能）
+	UseSkill_9 = 17;	// 使用技能9（装备主动技能）
+	UseSkill_10 = 18;	// 使用技能10（装备额外主动技能）
+	UseSkill_11 = 19;	// 使用技能11
+	UseSkill_12 = 20;	// 使用技能12（地图特殊技能）
+	UseSkill_13 = 21;	// 使用技能13（地图特殊技能）
+	UseSkill_14 = 22;	// 使用技能14（地图特殊技能）
+	State_Auto = 23;	// 自动模式
+	State_GameOver = 24;	// 战斗结束
+	State_OutOfControl = 25;	// 失控状态
+	State_Born = 26;	// 出生状态
+	State_Revive = 27;	// 复活状态
+	State_Dying = 28;	// 濒死状态
+	State_Null = 29;	// 无效的模式
+}
+
+enum ObjAbilityType
+{
+    ObjAbility_NoControl = 0;				//不能响应控制命令
+    ObjAbility_NoMove = 1;					//不能移动
+    ObjAbility_NoSkill = 2;					//不能施放技能
+    ObjAbility_ImmuneNegative = 3;          //免疫负面技能效果
+    ObjAbility_ImmuneControl = 4;           //免疫控制技能效果
+    ObjAbility_NoMoveRotate = 5;			//不能进行移动转向
+    ObjAbility_ImmuneCrit = 6;				//免疫暴击
+    ObjAbility_Blindness = 7;				//普攻不能输出伤害（是否被致盲）
+    ObjAbility_MoveProtect = 8;				//回城一帧保护,不要跟随回基地
+    ObjAbility_NoRecoverEnergy = 9;         //不能恢复能量
+    ObjAbility_Freeze = 10;					//冰冻
+    ObjAbility_DeadControl = 11;			//死亡移动的能力
+    ObjAbility_NoCollisionDetection = 12;   //不能被碰撞检测
+    ObjAbility_NoJointSkill = 13;			//不能使用联合技能
+    ObjAbility_AbortMove = 14;				//终止移动
+    ObjAbility_ForbidSelect = 15;           //不能被选中
+    ObjAbility_Renewal = 16;                //重生能力
+    ObjAbility_Sprint = 17;					//冲刺状态
+    ObjAbility_NoMoveButCanRatate = 18;		//不能移动但轮盘可以控制转向
+    ObjAbility_ForbidSelectBySkillOrg = 19;           //不能被施法者选中（盾山第二次选中别人要间隔一段时间）
+    ObjAbility_ImmunePositiveAndPersistFromOtherOriginators = 20;   //免疫Originator是其他人的的正面和永久技能效果
+    ObjAbility_Repressed = 21;              //被压制
+    ObjAbility_ImmuneDeMoveSpeed = 22;		//免疫减速效果
+    ObjAbility_Max = 23;
+}
+
+enum SkillSlotType
+{
+	SLOT_SKILL_0 = 0;	// 普通攻击技能
+	SLOT_SKILL_1 = 1;	// 技能1
+	SLOT_SKILL_2 = 2;	// 技能2
+	SLOT_SKILL_3 = 3;	// 技能3
+	SLOT_SKILL_EX3 = 4;	// 技能EX3 4技能英雄的第3技能
+	SLOT_SKILL_4 = 5;	// 恢复技能。或回城。回无。等。由地图初始化
+	SLOT_SKILL_5 = 6;	// 天赋技能
+	SLOT_SKILL_6 = 7;	// 回城
+	SLOT_SKILL_7 = 8;	// 饰品栏技能
+	SLOT_SKILL_9 = 9;	// 装备主动技能
+	SLOT_SKILL_10 = 10;	// 装备额外主动技能
+	SLOT_SKILL_11 = 11;	// 地图特殊技能
+	SLOT_SKILL_12 = 12;	// 地图专用技能1，只能用于和地图相关的配置
+	SLOT_SKILL_13 = 13;	// 地图专用技能2，只能用于和地图相关的配置
+	SLOT_SKILL_14 = 14;	// 地图专用技能3，只能用于和地图相关的配置
+	SLOT_SKILL_COUNT = 15;
+	SLOT_SKILL_VALID = 16;
+}
+
+enum SkillAbortType
+{
+	TYPE_SKILL_0 = 0;   //普通攻击技能
+	TYPE_SKILL_1 = 1;   //技能1
+	TYPE_SKILL_2 = 2;   //技能2
+	TYPE_SKILL_3 = 3;   //技能3
+	TYPE_SKILL_EX3 = 4;	//技能EX3
+	TYPE_SKILL_4 = 5;   //恢复技能。或回城。回无。等。由地图初始化。
+	TYPE_SKILL_5 = 6;   //天赋技能
+	TYPE_SKILL_6 = 7;   //回城
+	TYPE_SKILL_7 = 8;   //饰品栏技能
+	//TYPE_SKILL_8 = 8;   //给第四技能留空
+	TYPE_SKILL_9 = 9;   //装备主动技能
+	TYPE_SKILL_10 = 10;   //装备额外主动技能
+	TYPE_SKILL_11 = 11;	  // 地图特殊技能
+	TYPE_SKILL_COUNT = 12;
+	TYPE_SKILL_VALID = 13;
+	TYPE_MOVE = 14;   //移动
+	TYPE_DAMAGE = 15;   //伤害,基本情况下为false
+	TYPE_MAX = 16;      // 类型上限
+}
+
+enum SKILL_USE_FROM_TYPE        // 源头类型
+{
+	SKILL_USE_FROM_TYPE_SKILL = 0;
+	SKILL_USE_FROM_TYPE_EQUIP = 1;
+	SKILL_USE_FROM_TYPE_AREATRIGGER = 2;
+	SKILL_USE_FROM_TYPE_PASSIVESKILL = 3;
+	SKILL_USE_FROM_TYPE_COUNT = 4;
+}
+
+enum ProtectType
+{
+	PROTECT_NONE = 0;							// 占位
+	PROTECT_PHYSHURT = 1;						// 物理护盾
+	PROTECT_MAGICHURT = 2;						// 法术护盾
+	PROTECT_ALL = 3;							// 物理、法术护盾
+	PROTECT_ALL_INCLUDE_REALHURT = 4;			// 物理、法术、真实伤害护盾
+	PROTECT_CONVERT = 5;						// 受到的伤害按照一定比例转化为护盾，可抵挡物理、法术伤害（刘备）
+	PROTECT_EFFECT = 6;							// 触发某种效果
+	PROTECT_PROPERTY = 7;						// 属性转化为生命值，可抵挡物理、法术伤害（吕布2技能）
+	PROTECT_ENERGY = 8;							// 按照一定的比例扣除能量（嫦娥）
+}
+
+message VInt2	//2维向量
+{
+	required int32 x = 1;
+	required int32 y = 2;
+}
+
+message VInt3	//3维向量
+{
+	required int32 x = 1;
+	required int32 y = 2;
+	required int32 z = 3;
+}
+
+message TInt3	//3维转换矩阵
+{
+	required VInt3 x = 1;
+	required VInt3 y = 2;
+	required VInt3 z = 3;
+}
+
+message BoxCollider
+{
+	required VInt3 location = 1;		//盒子中心位置
+	required VInt3 size = 2;			//盒子尺寸
+	required TInt3 transform = 3;		//变换矩阵
+}
+
+message SphereCollider
+{
+	required VInt3 location = 1;		//球形中心位置
+	required int32 radius = 2;			//球形半径
+}
+
+message ActorValue
+{
+	required int32 phy_atk = 1;				//物理攻击
+	required int32 phy_def = 2;				//物理防御
+	required int32 mgc_atk = 3;				//魔法攻击
+	required int32 mgc_def = 4;				//魔法防御
+	required int32 mov_spd = 5;				//移动速度
+	required int32 atk_spd = 6;				//攻速加成
+	
+	required int32 ep = 7;  				//当前能量
+	required int32 max_ep = 8;  			//最大能量
+	required int32 hp_recover = 9;			//生命回复
+	required int32 ep_recover = 10;			//能量回复
+	
+	required int32 phy_armor_hurt = 11;		//物理护甲穿透
+	required int32 mgc_armor_hurt = 12;		//魔法护甲穿透
+	required int32 crit_rate = 13;			//爆击率
+	required int32 crit_effe = 14;			//爆击效果
+	required int32 phy_vamp = 15;			//物理吸血
+	required int32 mgc_vamp = 16;			//魔法吸血
+	required int32 cd_reduce = 17;			//冷却缩减
+	required int32 ctrl_reduce = 18;		//韧性
+	
+	optional int32 monster_endurance = 19;	//野怪仇恨值
+	optional int32 organ_conti_attack = 20;	//塔的持续攻击计数
+}
+
+message ActorBuffSkillState
+{
+	required int32 configId = 1;			//配置ID
+	required int32 times = 2;				//生效次数
+	required uint64 startTime = 3;			//开始时间
+}
+
+message ActorBuffMarkState
+{
+	required int32 origin_actorId = 1;		//施放者ID
+	required int32 configId = 2;			//配置ID
+	required int32 layer = 3;				//层数
+}
+
+message ActorBuffState
+{
+	repeated ActorBuffSkillState buff_skills = 1;//产生的BUFF组
+	repeated ActorBuffMarkState buff_marks = 2;	//印记状态组
+}
+
+message ActorState
+{
+    required int32 config_id = 1;  			//配置档ID
+    required int32 runtime_id = 2;  		//运行时id
+	required ActorType actor_type = 3;	//Actor主类型
+	required ActorSubType sub_type = 4;		//Actor子类型
+	required PLAYERCAMP camp = 5;		//所属阵营
+	
+	required ObjBehaviMode behav_mode = 6;	//当前行为状态
+    required VInt3 location = 7;			//位置
+	required VInt3 forward = 8;				//朝向
+    required int32 hp = 9;  				//当前生命
+	required int32 max_hp = 10;  			//最大生命
+	
+	optional ActorValue values = 11;		//数值属性
+	repeated bool abilities = 12;			//能力状态，true表示具有对应的ObjAbilityType对应的能力，注意ObjAbilityType是否定义了NO
+
+	required int32 attack_range = 13;		//普攻范围
+	required int32 attack_target = 14;		//攻击目标runtime_id
+	
+	optional int32 kill_income = 15;        // 含金值
+	repeated HitTargetInfo hit_target_info = 16;	// 命中的目标
+	
+	repeated bool camp_visible = 17; 		// 阵营可见
+	optional int32 sight_area = 18;			// 视野范围
+	
+	optional ActorBuffState buff_state = 19;		// BUFF状态
+	repeated HurtHeroInfo hurt_hero_info = 20;		// 对英雄伤害
+}
+
+message HitTargetInfo
+{
+	optional int32 hit_target = 1;			// 命中的目标
+	optional uint32 skill_id = 2;			// 技能id
+	optional SkillSlotType slot_type = 3;	// 技能槽位
+	optional int32 conti_hit_count = 4;		// 连续命中次数，仅防御塔有效
+}
+
+message HurtHeroInfo
+{
+	optional int32 hurt_target = 1;			// 伤害的英雄
+	optional uint32 hurt = 2;				// 伤害
+}
+
+message TakeHurtInfo	//承受伤害明细
+{
+	required int32 atker = 1;			//攻击者ID
+	required int32 hurtValue = 2;		//伤害值
+	required int32 skillSlot = 3;		//攻击者触发技能槽位
+	required SKILL_USE_FROM_TYPE sourceType = 4;	//伤害来源类型
+	required int32 sourceID = 5;		//伤害来源ID
+}

@@ -1,0 +1,67 @@
+syntax = "proto2"; //用于proto3.x编译时兼容proto2.x
+package sgame_state;
+
+import "common.proto";
+import "hero.proto";
+import "scene.proto";
+
+message FrameState		//帧状态
+{
+	required int32 frameNo = 1;			//当前帧号
+    repeated HeroState hero_states = 2;	//英雄状态组
+	repeated ActorState npc_states = 3;	//非玩家角色组
+	repeated Bullet bullets = 4;		//子弹状态组
+	repeated Cake cakes = 5;			//功能物件组
+    repeated EquipInfo equip_infos = 6; //装备信息组
+}
+
+message FrameSlice		//帧切片
+{
+	repeated FrameState frames = 1;			//一段连续帧
+}
+
+message CampStatInfo	//阵营统计信息
+{
+	required int32 camp = 1;	//阵营
+	required int32 score = 2;	//比分
+	required int32 money = 3;	//经济
+	required int32 exp = 4;		//经验
+}
+
+message HeroStatInfo	//英雄统计信息
+{
+	required int32 runtime_id = 1;					//运行时ID
+	required int32 score = 2;						//战局评分
+	required int32 money = 3;						//经济
+	optional int32 totalHurtToHeroOrigin = 4;		//(对英雄)有效输出
+	optional int32 totalBeHurtByHeroOrigin = 5;		//(对英雄)有效承受
+	optional int32 destroyTowerCnt = 6;				//推塔数	
+	optional int32 killSoidierCnt = 7;				//击杀小兵数
+	optional int32 KillMonsterCnt = 8;				//击杀野怪数
+	optional int32 KillLittleDragonCnt = 9;			//击杀小龙数
+	optional int32 Hero1KillBigDragonCnt = 10;		//击杀大龙数
+	optional int32 SelfKillDarkCnt = 11;			//击杀黑暗暴君数
+	optional int32 TotalRedBuff = 12;				//击杀红爸爸数
+	optional int32 TotalBlueBuff = 13;				//击杀蓝爸爸数
+}
+
+message CloseState		//结束状态
+{
+	repeated CampStatInfo camp_stat_info = 1;	//阵营统计信息
+	repeated HeroStatInfo hero_stat_info = 2;	//英雄统计信息
+}
+
+message EquipInfo
+{
+    optional int32 equip_id = 1;                    //装备ID
+    optional int32 equip_price = 2;                 //装备价格
+	repeated int32 equip_atoms = 3;					//子装备ID
+}
+
+message MonsterSpawnInfo
+{
+	optional int32 monster_id = 1;					//野怪config_id
+	optional int32 spawn_timer = 2;					//重生倒计时
+	optional int32 born_pos_x = 3;					//重生位置
+	optional int32 born_pos_z = 4;					//重生位置
+}

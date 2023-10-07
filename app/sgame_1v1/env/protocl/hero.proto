@@ -1,0 +1,118 @@
+syntax = "proto2"; //用于proto3.x编译时兼容proto2.x
+package sgame_state;
+
+import "common.proto";
+import "command.proto";
+
+message SkillSlotState
+{
+	required int32 configId = 1;			//配置ID
+	required SkillSlotType slot_type = 2;	//技能槽
+	required int32 level = 3;				//等级
+	required bool usable = 4;				//能否使用
+	required int32 cooldown = 5;			//CD剩余时长
+	required int32 cooldown_max = 6;		//CD总长
+	optional int32 usedTimes = 7;			//释放次数
+	optional int32 hitHeroTimes = 8;		//命中英雄释放次数
+	optional int32 succUsedInFrame = 9;		//当前帧成功使用次数
+	optional int32 nextConfigID = 10;       //多段技能的下一个技能id
+	optional int32 comboEffectTime = 11;	//组合技激活余留时间
+}
+
+message SkillState
+{
+	repeated SkillSlotState slot_states = 1;//技能槽状态组
+}
+
+message BuffSkillState
+{
+	required int32 configId = 1;			//配置ID
+	required uint64 startTime = 2;			//开始时间
+	required int32 times = 3;				//生效次数
+	optional int32 effectType = 4;			//类型
+}
+
+message BuffMarkState
+{
+	required int32 origin_actorId = 1;		//施放者ID
+	required int32 configId = 2;			//配置ID
+	required int32 layer = 3;				//层数
+}
+
+message BuffState
+{
+	repeated BuffSkillState buff_skills = 1;//产生的BUFF组
+	repeated BuffMarkState buff_marks = 2;	//印记状态组
+}
+
+message PassiveSkill
+{
+	optional int32 passive_skillid = 1;
+	optional int32 cooldown = 2;
+}
+
+message ActiveSkill
+{
+	optional int32 active_skillid = 1;
+	optional int32 cooldown = 2;
+}
+
+message EquipSlot
+{
+	required int32 configId = 1;			//配置ID（对应装备配置表）
+	required int32 buyPrice = 2;			//购买单价
+	required int32 amount = 3;				//数量
+	repeated ActiveSkill active_skill = 4; 	//主动技能
+	repeated PassiveSkill passive_skill = 5;//被动技能
+}
+
+message EquipState
+{
+	repeated EquipSlot equips = 1;	//装备列表
+}
+
+message ReturnCityAbortInfo		// 回城技能打断信息
+{
+	optional SkillAbortType abortType = 1;		// 打断类型
+	optional bool isActive = 2;		// 是否主动打断
+	optional SkillSlotType attackSlotType = 3;	// 若为被动打断，攻击者的技能槽位
+	optional uint32 objID = 4;		// 攻击者runtime_id
+}
+
+message ProtectInfo			// 护盾信息
+{
+	optional ProtectType protectType = 1;		// 护盾类型
+	optional uint32 protectValue = 2;			// 护盾值
+}
+
+message HeroState
+{
+	required uint32 player_id = 1;					//玩家id
+    required ActorState actor_state = 2;			//角色状态
+	required SkillState skill_state = 3;			//技能状态
+	required EquipState equip_state = 4;			//装备状态
+	required BuffState buff_state = 5;				//BUFF状态                  //是否需提供buff映射表
+
+	required int32 level = 6;						//等级
+	required int32 exp = 7;							//经验
+	required int32 money = 8;						//金钱
+	required int32 revive_time = 9;					//复活时间
+	
+	required int32 killCnt = 10;					    //击杀次数
+	required int32 deadCnt = 11;					//死亡次数
+	required int32 assistCnt = 12;					//助攻次数
+	required int32 moneyCnt = 13;					//经济总量
+	
+	required int32 totalHurt = 14;					// 总输出
+	required int32 totalHurtToHero = 15;			// 对英雄伤害输出
+	required int32 totalBeHurtByHero = 16;			// 承受英雄伤害
+	repeated PassiveSkill passive_skill = 17;		//被动技能 
+	
+	repeated CmdPkg real_cmd = 18;					// 实际执行指令
+	
+	repeated TakeHurtInfo takeHurtInfos = 19;		// 承受伤害序列
+	repeated bool canAbortCurSkill = 20;			// 是否可以打断当前技能
+	repeated ReturnCityAbortInfo returnCityAbortInfo = 21;	// 打断当前技能信息
+	optional bool isInGrass = 22;					// 判断英雄是否在草丛中         
+	repeated ProtectInfo protectInfo = 23;			// 护盾信息
+}

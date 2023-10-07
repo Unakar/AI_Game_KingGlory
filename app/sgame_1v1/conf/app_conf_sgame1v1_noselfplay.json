@@ -1,0 +1,15 @@
+{
+  "sgame_1v1": {
+    "run_handler": "app.sgame_1v1.env.sgame_run_handler.SgameRunHandler",
+    "policies": {
+      "train_one": {
+        "policy_builder": "framework.server.python.aisrv.async_policy.AsyncBuilder",
+        "algo": "ppo",
+        "state": "app.sgame_1v1.env.sgame_state.SgameState",
+        "actor_network": "app.sgame_1v1.actor_learner.game_controller.GameController",
+        "learner_network": "app.sgame_1v1.actor_learner.game_controller.GameController",
+        "action": "app.sgame_1v1.env.sgame_action.SgameAction"
+      }
+    }
+  }
+}

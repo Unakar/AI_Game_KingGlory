@@ -1,0 +1,10 @@
+{
+  "ppo": {
+    "actor_model": "app.sgame_1v1.actor_learner.game_controller.GameController",
+    "learner_model": "app.sgame_1v1.actor_learner.game_controller.GameController",
+    "trainer": "framework.server.python.learner.sgame1v1_ppo_trainer.Sgame1V1PPOTrainer",
+    "predictor": "framework.server.python.actor.ppo_predictor.PPOPredictor",
+    "expr_processor": "app.sgame_1v1.env.sample_processor.sgame_sample_processor.SgameSampleProcessor",
+    "default_config": "framework.common.algorithms.ppo.PPODefaultConfig"
+  }
+}

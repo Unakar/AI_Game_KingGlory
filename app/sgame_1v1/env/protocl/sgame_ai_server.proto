@@ -1,0 +1,77 @@
+syntax = "proto2"; //用于proto3.x编译时兼容proto2.x
+package kaiwu_aisvr;
+
+import "command.proto";
+import "sgame_state.proto";
+
+//兼容interface
+message AICommandInfo
+{
+  required int32 					player_id	        = 1;		// 玩家ID
+  optional sgame_state.CmdPkg 	cmd_info	        = 2;		// 指令信息
+}
+
+//兼容interface 老请求
+message AIServerRequest
+{
+  required string 		sgame_id	= 1;		// 当前游戏ID
+  required int32 			frame_no	= 2;		// 当前帧号
+
+  optional bool 			gameover	= 3;
+  repeated AICommandInfo 	cmd_list	= 4;		// 上一次指令执行状态
+  optional sgame_state.FrameState frame_state = 5;		// 当前帧数据
+}
+
+//兼容interface 单个请求
+message SingleReq
+{
+  required AIServerRequest ai_req  = 1;
+  required int32 req_type = 2;
+  required int32 seq_no = 3;
+  required int32 pid = 4;
+}
+
+//兼容老响应
+message AIServerResponse
+{
+  repeated AICommandInfo 		cmd_list	= 1;		// 本次需要执行指令
+  optional int32           	gameover_ai_server    = 2;	// server主动结束本局游戏
+}
+
+//玩家信息
+message PlayerInfo
+{
+  required int32 hero_id = 1;
+}
+
+//对局基础信息
+message GameInfo
+{
+  repeated PlayerInfo player_info = 1;
+  optional string client_id = 2;
+  optional string client_version = 3;
+}
+
+enum KaiWuMsgType {
+  E_UNKNOWN = 0;
+  E_INIT = 1;
+  E_FRAME = 2;
+  E_END = 3;
+}
+
+//开悟aisvr请求
+message KaiwuAIServerRequest {
+  repeated SingleReq req_list = 1;
+  optional int32 player_num = 2; //玩家数量
+  required string game_id = 3; //对局的ID号
+  required KaiWuMsgType msg_type = 4; //消息类型
+  optional GameInfo game_info = 5;  //对局基础信息
+}
+
+//开悟aisvr响应
+message KaiwuAIServerResponse
+{
+  repeated AIServerResponse rsp_pbs = 1 ; //返回的response列表
+  required int32 code = 2; //状态码
+}
+
