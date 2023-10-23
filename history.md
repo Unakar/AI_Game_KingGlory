@@ -1,4 +1,5 @@
 default:
+```json
 {
   "reward_money": "0.01",
   "reward_exp": "0.01" ,
@@ -10,9 +11,11 @@ default:
   "reward_last_hit": "0.5",
   "log_level": "8"
 }
+```
 
 By wxg
 v1:
+```json
 {
   "reward_money": "0.05",
   "reward_exp": "0.05" ,
@@ -24,9 +27,11 @@ v1:
   "reward_last_hit": "0.5",
   "log_level": "8"
 }
+```
 
 By wxg
 **v2:**暂时最优
+```json
 {
   "reward_money": "0.02",
   "reward_exp": "0.02" ,
@@ -38,9 +43,11 @@ By wxg
   "reward_last_hit": "0.5",
   "log_level": "8"
 }
+```
 
 By wxg
 v3:
+```json
 {
   "reward_money": "0.02",
   "reward_exp": "0.02" ,
@@ -52,3 +59,4 @@ v3:
   "reward_last_hit": "0.5",
   "log_level": "8"
 }
+```
