@@ -44,6 +44,8 @@ By wxg
   "log_level": "8"
 }
 ```
+production_consume_ratio = 1
+learning_rate = 1e-4
 
 By wxg
 v3:
