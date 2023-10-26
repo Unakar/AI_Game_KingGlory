@@ -65,3 +65,22 @@ v3:
 ```
 production_consume_ratio = 1
 learning_rate = 1e-4
+
+By wxg
+v4:
+> 在v3调参中发现了一个winrate达到1的模型，将其取出，降低学习率至原来的1/4，小火收汁.jpg
+```json
+{
+  "reward_money": "0.04",
+  "reward_exp": "0.04" ,
+  "reward_hp_point": "5.0",
+  "reward_ep_rate": "0.75",
+  "reward_kill": "-0.45",
+  "reward_dead": "-1.0",
+  "reward_tower_hp_point": "3.0",
+  "reward_last_hit": "0.5",
+  "log_level": "8"
+}
+```
+production_consume_ratio = 1
+learning_rate = 2.5e-5
