@@ -84,3 +84,22 @@ v4:
 ```
 production_consume_ratio = 1
 learning_rate = 2.5e-5
+
+By wxg
+v5:
+> 在调高经济后，发现纸面数据已经十分可观，但是由于不积极推塔，即使KDA，经济等有极大优势，仍然输给base4，因此激进地调高了推塔的奖励, 并将lr置到默认的1/2
+```json
+{
+  "reward_money": "0.05",
+  "reward_exp": "0.05" ,
+  "reward_hp_point": "5.0",
+  "reward_ep_rate": "0.75",
+  "reward_kill": "-0.5",
+  "reward_dead": "-1.0",
+  "reward_tower_hp_point": "6.0",
+  "reward_last_hit": "0.5",
+  "log_level": "8"
+}
+```
+production_consume_ratio = 1
+learning_rate = 5e-5
