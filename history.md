@@ -123,3 +123,24 @@ v6
 production_consume_ratio = 1
 learning_rate = 8e-5
 GAMMA = 0.9975(默认0.995)
+
+By xt
+v8
+> 尝试调参GAMMA，以v3作为蓝本，略微调高tower reward
+```json
+{
+  "reward_money": "0.04",
+  "reward_exp": "0.04" ,
+  "reward_hp_point": "4.8",
+  "reward_ep_rate": "0.75",
+  "reward_kill": "-0.45",
+  "reward_dead": "-1.0",
+  "reward_tower_hp_point": "3.5",
+  "reward_last_hit": "0.5",
+  "log_level": "8"
+}
+```
+production_consume_ratio = 1
+learning_rate = 5e-5
+clip = 0.25
+GAMMA = 0.9975(默认0.995)
