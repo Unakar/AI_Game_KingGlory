@@ -144,3 +144,25 @@ production_consume_ratio = 1
 learning_rate = 5e-5
 clip = 0.25
 GAMMA = 0.9975(默认0.995)
+
+By xt
+restart v1
+> 尝试进行大规模修改调参，主要是提高last_hit的奖励
+```json
+{
+  "reward_money": "0.04",
+  "reward_exp": "0.04" ,
+  "reward_hp_point": "4.0",
+  "reward_ep_rate": "0.75",
+  "reward_kill": "-0.45",
+  "reward_dead": "-1.0",
+  "reward_tower_hp_point": "5",
+  "reward_last_hit": "2.0",
+  "log_level": "8"
+}
+```
+production_consume_ratio = 1
+learning_rate = 5e-5
+ppo_clip_range = 0.2
+GAMMA = 0.996
+LAMDA = 0.965
