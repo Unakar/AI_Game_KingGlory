@@ -185,3 +185,30 @@ restart v2
 ```
 batch_size_release = 256(原512)
 learning_rate = 3e-5
+
+By wxg
+v10 based on v8
+> v8的纸面数据已较为客观，但进攻策略过于保守，导致在顺风局被反杀，因此大幅提高tower_hp_point和last_hit使进攻和推塔更激进
+{
+  "reward_money": "0.05",
+  "reward_exp": "0.05" ,
+  "reward_hp_point": "5.0",
+  "reward_ep_rate": "0.75",
+  "reward_kill": "-0.5",
+  "reward_dead": "-1.0",
+  "reward_tower_hp_point": "10.0",
+  "reward_last_hit": "3.0",
+  "log_level": "8"
+}
+> 学习率置为默认，样本消耗比置为1，ppo_epoch置为1，GAMMA和LAMDA调高
+- conf/configue.ini
+  - ppo_clip_range = 0.3（默认0.3）
+  - learning_rate = 1e-4（默认1e-4）
+  - var_beta = 0.1（默认0.1）
+  - production_consume_ratio = 1（默认5）
+
+- conf/learner.ini
+  - ppo_epoch = 1（默认3）
+- common/configs/config.py
+  - GAMMA = 0.996(默认0.995)
+  - LAMDA = 0.96(默认0.95)
