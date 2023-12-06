@@ -212,3 +212,30 @@ v10 based on v8
 - common/configs/config.py
   - GAMMA = 0.996(默认0.995)
   - LAMDA = 0.96(默认0.95)
+
+By wxg
+v11 based on v10
+> v10推塔和进攻欲望过高，降低了对自身健康的重视，稍微降低塔的奖励和进攻奖励，略微提高法力奖励，防止乱放技能
+{
+  "reward_money": "0.05",
+  "reward_exp": "0.05" ,
+  "reward_hp_point": "5.0",
+  "reward_ep_rate": "2.0",
+  "reward_kill": "-0.5",
+  "reward_dead": "-1.0",
+  "reward_tower_hp_point": "7.0",
+  "reward_last_hit": "2.0",
+  "log_level": "8"
+}
+> 提高GAMMA，注重长期收益，提高clip，快速学习新策略
+- conf/configue.ini
+  - ppo_clip_range = 0.6（默认0.3）
+  - learning_rate = 1e-4（默认1e-4）
+  - var_beta = 0.1（默认0.1）
+  - production_consume_ratio = 1（默认5）
+
+- conf/learner.ini
+  - ppo_epoch = 1（默认3）
+- common/configs/config.py
+  - GAMMA = 0.9975(默认0.995)
+  - LAMDA = 0.96(默认0.95)
