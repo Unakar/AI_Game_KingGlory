@@ -265,3 +265,29 @@ t2v1
 - common/configs/config.py
   - GAMMA = 0.9975(默认0.995)
   - LAMDA = 0.98(默认0.95)
+
+By wxg
+t2v2
+> ep_rate调为默认参数
+{
+  "reward_money": "0.04",
+  "reward_exp": "0.04" ,
+  "reward_hp_point": "5.0",
+  "reward_ep_rate": "0.75",
+  "reward_kill": "-0.4",
+  "reward_dead": "-1.0",
+  "reward_tower_hp_point": "8.0",
+  "reward_last_hit": "2.0",
+  "log_level": "8"
+}
+- conf/configue.ini
+  - ppo_clip_range = 0.3（默认0.3）
+  - learning_rate = 1e-4（默认1e-4）
+  - var_beta = 0.1（默认0.1）
+  - production_consume_ratio = 1（默认5）
+
+- conf/learner.ini
+  - ppo_epoch = 1（默认3）
+- common/configs/config.py
+  - GAMMA = 0.9975(默认0.995)
+  - LAMDA = 0.98(默认0.95)
