@@ -403,3 +403,29 @@ t4v1 based on v3_12h
 - common/configs/config.py
   - GAMMA = 0.996(默认0.995)
   - LAMDA = 0.96(默认0.95)
+
+By wxg
+t4v2 based on t4v1_9h
+```json
+{
+  "reward_money": "0.04",
+  "reward_exp": "0.04" ,
+  "reward_hp_point": "5.0",
+  "reward_ep_rate": "0.75",
+  "reward_kill": "-0.45",
+  "reward_dead": "-1.0",
+  "reward_tower_hp_point": "6.0",
+  "reward_last_hit": "2.0",
+  "log_level": "8"
+}
+```
+- conf/configue.ini
+  - ppo_clip_range = 0.3（默认0.3）
+  - learning_rate = 5e-5（默认1e-4）
+  - var_beta = 0.1（默认0.1）
+  - production_consume_ratio = 1（默认3）
+- conf/learner.ini
+  - ppo_epoch = 1（默认3）
+- common/configs/config.py
+  - GAMMA = 0.996(默认0.995)
+  - LAMDA = 0.96(默认0.95)
