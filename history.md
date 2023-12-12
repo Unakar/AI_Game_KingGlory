@@ -351,3 +351,29 @@ t3v1
 - common/configs/config.py
   - GAMMA = 0.995(默认0.995)
   - LAMDA = 0.95(默认0.95)
+
+By wxg
+t3v2
+```json
+{
+  "reward_money": "0.03",
+  "reward_exp": "0.03" ,
+  "reward_hp_point": "3.0",
+  "reward_ep_rate": "0.75",
+  "reward_kill": "-0.2",
+  "reward_dead": "-0.5",
+  "reward_tower_hp_point": "6.0",
+  "reward_last_hit": "2.0",
+  "log_level": "8"
+}
+```
+- conf/configue.ini
+  - ppo_clip_range = 0.25（默认0.3）
+  - learning_rate = 5e-5（默认1e-4）
+  - var_beta = 0.1（默认0.1）
+  - production_consume_ratio = 2（默认3）
+- conf/learner.ini
+  - ppo_epoch = 2（默认3）
+- common/configs/config.py
+  - GAMMA = 0.996(默认0.995)
+  - LAMDA = 0.96(默认0.95)
